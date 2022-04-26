@@ -1,6 +1,6 @@
 <template>
   <q-page class="main">
-    <div class="row-custom">
+    <div class="row-custom q-pa-xl">
       <div class="col-custom" v-for="filt in filters" :key="filt.label">
         <div spread class="single-filter">
           <div class="single-filter__header flex justify-between items-center">
@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <q-select
+          <!-- <q-select
             dense
             outlined
             v-model="filt.model"
@@ -34,7 +34,21 @@
             :hide-dropdown-icon="filt.manual"
             input-debounce="0"
             @filter="filterFn"
-          />
+          /> -->
+          <div class="row justify-between no-wrap">
+            <div class="col-9 q-mr-xs">
+              <SingleFilter
+                v-model="filt.model"
+                :use-input="filt.manual"
+                :hide-dropdown-icon="filt.manual"
+                :filterOption="filt.options"
+                :parentFilterOptions="filt.parentOptions"
+              ></SingleFilter>
+            </div>
+            <div class="col-3 innot">
+              <InNot @changeIsNotModel="changeIsNotModels"></InNot>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-custom" v-if="options.length > 0">
@@ -56,6 +70,9 @@
 
 <script>
 import { defineComponent, ref, reactive } from "vue";
+import SingleFilter from "components/SingleFilter.vue";
+
+import InNot from "components/InNot.vue";
 
 let flowsOptions = [
   "flow",
@@ -90,6 +107,11 @@ let preLandsOptions = [
 export default defineComponent({
   name: "IndexPage",
 
+  components: {
+    SingleFilter,
+    InNot,
+  },
+
   setup() {
     const flows = ref(flowsOptions);
     const lands = ref(landsOptions);
@@ -105,6 +127,7 @@ export default defineComponent({
         value: "Потоки",
         manual: false,
         options: flows,
+        parentOptions: flowsOptions,
         model: textFlows,
       },
       {
@@ -113,6 +136,7 @@ export default defineComponent({
         value: "Лендинги",
         manual: false,
         options: lands,
+        parentOptions: landsOptions,
         model: textLands,
       },
       {
@@ -121,6 +145,7 @@ export default defineComponent({
         value: "Прелендинги",
         manual: false,
         options: preLands,
+        parentOptions: preLandsOptions,
         model: preLandsText,
       },
       {
@@ -150,6 +175,10 @@ export default defineComponent({
       preLands,
 
       options: reactive(stringOptions),
+
+      changeIsNotModels(val) {
+        console.log(val);
+      },
 
       addFilter(val) {
         this.filters.push(val);
@@ -291,6 +320,19 @@ export default defineComponent({
       color: white;
       overflow: hidden;
       border: 1px solid rgba(173, 20, 87, 0.7);
+    }
+  }
+
+  .innot {
+    .q-field--outlined .q-field__control {
+      .q-field__append {
+        padding: 0 0;
+        background-color: rgba(173, 20, 87, 0.7);
+        border-radius: 0 3px 3px 0;
+        color: white;
+        overflow: hidden;
+        border: 1px solid rgba(173, 20, 87, 0.7);
+      }
     }
   }
 }
