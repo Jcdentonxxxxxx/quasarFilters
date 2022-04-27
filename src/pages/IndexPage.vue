@@ -43,10 +43,14 @@
                 :hide-dropdown-icon="filt.manual"
                 :filterOption="filt.options"
                 :parentFilterOptions="filt.parentOptions"
+                :isNotModels="filt.isNotModelllllll"
               ></SingleFilter>
             </div>
             <div class="col-3 innot">
-              <InNot @changeIsNotModel="changeIsNotModels"></InNot>
+              <InNot
+                :idx="filt.id"
+                @change-is-not-model="(n, idx) => changeIsNotModels(n, idx)"
+              ></InNot>
             </div>
           </div>
         </div>
@@ -119,6 +123,7 @@ export default defineComponent({
     let textFlows = ref(null);
     let textLands = ref(null);
     let preLandsText = ref(null);
+    let isNotModelllllll = ref("in");
 
     const stringOptions = [
       {
@@ -129,6 +134,7 @@ export default defineComponent({
         options: flows,
         parentOptions: flowsOptions,
         model: textFlows,
+        isNotModelllllll: "in",
       },
       {
         id: 2,
@@ -138,6 +144,7 @@ export default defineComponent({
         options: lands,
         parentOptions: landsOptions,
         model: textLands,
+        isNotModelllllll: "in",
       },
       {
         id: 3,
@@ -147,18 +154,21 @@ export default defineComponent({
         options: preLands,
         parentOptions: preLandsOptions,
         model: preLandsText,
+        isNotModelllllll: "in",
       },
       {
         id: 4,
         label: "Выплаты",
         value: "Выплаты",
         options: false,
+        isNotModelllllll: "in",
       },
       {
         id: 5,
         label: "Поступления",
         value: "Поступления",
         options: false,
+        isNotModelllllll: "in",
       },
     ];
 
@@ -173,11 +183,16 @@ export default defineComponent({
       flows,
       lands,
       preLands,
+      isNotModelllllll,
 
       options: reactive(stringOptions),
 
-      changeIsNotModels(val) {
-        console.log(val);
+      changeIsNotModels(val, idx) {
+        // this.isNotModelllllll = val;
+        let obj = this.filters.find((item) => item.id == idx);
+
+        obj.isNotModelllllll = val;
+        console.log(obj.isNotModelllllll);
       },
 
       addFilter(val) {

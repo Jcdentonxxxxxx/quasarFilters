@@ -13,16 +13,15 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "SingleFilter",
-  props: ["filterOption", "parentFilterOptions"],
+  props: ["filterOption", "parentFilterOptions", "isNotModels"],
 
   setup(props) {
     let child = ref(props.filterOption);
     let parent = ref(props.parentFilterOptions);
-    let isNotModel = ref("in");
+
     return {
       child,
       parent,
-      isNotModel,
 
       filterFn(val, update) {
         if (val === "") {
@@ -33,7 +32,9 @@ export default defineComponent({
           });
           return;
         }
-        if (isNotModel.value === "in") {
+        console.log(props.isNotModels);
+
+        if (props.isNotModels === "in") {
           update(() => {
             const needle = val.toLowerCase();
             child.value = parent.value.filter((v) => {
@@ -42,7 +43,7 @@ export default defineComponent({
           });
         }
 
-        if (isNotModel.value === "NotIn") {
+        if (props.isNotModels === "NotIn") {
           update(() => {
             const needle = val.toLowerCase();
             child.value = parent.value.filter((v) => {

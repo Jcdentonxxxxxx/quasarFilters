@@ -6,7 +6,7 @@
     :options="options"
     @update:model-value="
       (value) => {
-        $emit('changeIsNotModel', value);
+        $emit('changeIsNotModel', value, id);
       }
     "
   />
@@ -17,13 +17,15 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "InNot",
+  props: ["idx"],
 
-  setup() {
+  setup(props) {
     let isNotModel = ref("in");
+    let id = ref(props.idx);
 
     return {
       isNotModel,
-
+      id,
       options: ["in", "NotIn", ">", "<"],
     };
   },
