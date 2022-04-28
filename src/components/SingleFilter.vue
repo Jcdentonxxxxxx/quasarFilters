@@ -51,6 +51,24 @@ export default defineComponent({
             });
           });
         }
+
+        if (props.isNotModels === ">") {
+          update(() => {
+            const needle = +val;
+            child.value = parent.value.filter((v) => {
+              return +v > needle;
+            });
+          });
+        }
+
+        if (props.isNotModels === "<") {
+          update(() => {
+            const needle = +val;
+            child.value = parent.value.filter((v) => {
+              return +v < needle;
+            });
+          });
+        }
       },
     };
   },

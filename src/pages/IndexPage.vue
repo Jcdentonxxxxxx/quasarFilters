@@ -49,6 +49,8 @@
             <div class="col-3 innot">
               <InNot
                 :idx="filt.id"
+                :typeIsNot="filt.typeof"
+                :pickIsNot="filt.isNotModelllllll"
                 @change-is-not-model="(n, idx) => changeIsNotModels(n, idx)"
               ></InNot>
             </div>
@@ -108,6 +110,10 @@ let preLandsOptions = [
   "v2200_ro_sustav_new_chest",
 ];
 
+let payOptions = [125, 986, 475, 364, 751, 647, 962];
+
+let incomeOptions = [98564, 13485, 57426, 95862, 14576];
+
 export default defineComponent({
   name: "IndexPage",
 
@@ -120,9 +126,15 @@ export default defineComponent({
     const flows = ref(flowsOptions);
     const lands = ref(landsOptions);
     const preLands = ref(preLandsOptions);
+    const pay = ref(payOptions);
+    const income = ref(incomeOptions);
+
     let textFlows = ref(null);
     let textLands = ref(null);
     let preLandsText = ref(null);
+    let payText = ref(null);
+    let incomeText = ref(null);
+
     let isNotModelllllll = ref("in");
 
     const stringOptions = [
@@ -135,6 +147,7 @@ export default defineComponent({
         parentOptions: flowsOptions,
         model: textFlows,
         isNotModelllllll: "in",
+        typeof: true,
       },
       {
         id: 2,
@@ -145,6 +158,7 @@ export default defineComponent({
         parentOptions: landsOptions,
         model: textLands,
         isNotModelllllll: "in",
+        typeof: true,
       },
       {
         id: 3,
@@ -155,20 +169,29 @@ export default defineComponent({
         parentOptions: preLandsOptions,
         model: preLandsText,
         isNotModelllllll: "in",
+        typeof: true,
       },
       {
         id: 4,
         label: "Выплаты",
         value: "Выплаты",
-        options: false,
-        isNotModelllllll: "in",
+        manual: false,
+        options: pay,
+        parentOptions: payOptions,
+        model: payText,
+        isNotModelllllll: ">",
+        typeof: false,
       },
       {
         id: 5,
         label: "Поступления",
         value: "Поступления",
-        options: false,
-        isNotModelllllll: "in",
+        manual: false,
+        options: income,
+        parentOptions: incomeOptions,
+        model: incomeText,
+        isNotModelllllll: ">",
+        typeof: false,
       },
     ];
 

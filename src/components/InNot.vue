@@ -2,7 +2,7 @@
   <q-select
     dense
     outlined
-    v-model="isNotModel"
+    v-model="isNotModelCurrent"
     :options="options"
     @update:model-value="
       (value) => {
@@ -14,19 +14,23 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+let optionsStr = ["in", "NotIn"];
+let optionInt = [">", "<"];
 
 export default defineComponent({
   name: "InNot",
-  props: ["idx"],
+  props: ["idx", "typeIsNot", "pickIsNot"],
 
   setup(props) {
     let isNotModel = ref("in");
     let id = ref(props.idx);
+    let isNotModelCurrent = ref(props.pickIsNot);
 
     return {
       isNotModel,
       id,
-      options: ["in", "NotIn", ">", "<"],
+      isNotModelCurrent,
+      options: props.typeIsNot ? optionsStr : optionInt,
     };
   },
 });
